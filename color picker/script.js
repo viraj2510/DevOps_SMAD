@@ -1,10 +1,11 @@
 const colorInput = document.getElementById("colorInput");
 const output = document.getElementById("output");
+const body = document.getElementById("colorBody");
 
 colorInput.addEventListener("input", function () {
     let hexColor = colorInput.value;
     let rgbColor = hexToRgb(hexColor);
-    document.body.style.backgroundColor = hexColor;
+    body.style.backgroundColor = hexColor;
     output.innerHTML = `HEX: ${hexColor} | RGB: ${rgbColor}`;
 });
 
