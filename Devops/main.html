@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Jam Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #282c36;
+            color: #f1f1f1;
+            text-align: center;
+            transition: background 0.3s, color 0.3s;
+        }
+        .light-mode {
+            background-color: #ffffff;
+            color: #000000;
+        }
+        nav {
+            background-color: #4a90e2;
+            padding: 15px;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin: 0 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover {
+            color: #d0e4ff;
+        }
+        #content {
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+        }
+        img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+        img:hover {
+            transform: scale(1.1);
+        }
+        button {
+            background-color: #4a90e2;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body onload="loadPage('home')">
+    <nav>
+        <ul>
+            <li><a onclick="loadPage('home')">Home</a></li>
+            <li><a onclick="loadPage('gamejam')">Game Jam</a></li>
+            <li><a onclick="loadPage('about')">About Us</a></li>
+            <li><a onclick="loadPage('gallery')">Gallery</a></li>
+        </ul>
+    </nav>
+    <button onclick="toggleTheme()">Toggle Dark Mode</button>
+    <div id="content">
+        <!-- Dynamic Content Loads Here -->
+    </div>
+    <script>
+        function loadPage(page) {
+            let content = {
+                'home': `<h1>Welcome to Game Jam Tracker</h1>
+                         <p>Find the latest game jam events here.</p>
+                         <img src="Home.jpg" alt="Home Image">
+                         <p id="countdown"></p>` ,
+                'gamejam': `<h1>Upcoming Game Jams</h1>
+                            <p>Find out about the biggest game jams happening soon.</p>
+                            <div>
+                                <p><strong>Global Game Jam</strong> - January 26-28, 2025</p>
+                                <p>A worldwide game jam where developers collaborate and create games within 48 hours.</p>
+                                <a href="https://globalgamejam.org/" target="_blank"><button>Join Now</button></a>
+                            </div>
+                            <div>
+                                <p><strong>GMTK Game Jam</strong> - July 18-20, 2025</p>
+                                <p>Hosted by Game Maker’s Toolkit, this jam challenges developers with a unique theme.</p>
+                                <a href="https://itch.io/jam/gmtk-2025" target="_blank"><button>Join Now</button></a>
+                            </div>
+                            <div>
+                                <p><strong>Ludum Dare 54</strong> - April 19-22, 2025</p>
+                                <p>One of the longest-running game jams where developers compete solo or in teams.</p>
+                                <a href="https://ldjam.com/" target="_blank"><button>Join Now</button></a>
+                            </div>
+                            <h3>Which game jam are you joining?</h3>
+                            <button onclick="vote('Global Game Jam')">Global Game Jam</button>
+                            <button onclick="vote('GMTK Game Jam')">GMTK Game Jam</button>
+                            <button onclick="vote('Ludum Dare')">Ludum Dare</button>
+                            <p id="voteResult"></p>` ,
+                'about': `<h1>About Us</h1>
+                          <p>We are a team of passionate game developers providing information on game jams worldwide.</p>
+                          <img src="About_Us.jpg" alt="About Us Image">` ,
+                'gallery': `<h1>Gallery</h1>
+                            <p>Explore amazing moments from past Game Jams.</p>
+                            <img src="Gallery_1.jpg" alt="Gallery Image 1">
+                            <img src="Gallery_2.jpg" alt="Gallery Image 2">` 
+            };
+            document.getElementById('content').innerHTML = content[page] || '<h1>Page Not Found</h1>';
+            if (page === 'home') {
+                countdown("2025-04-18T00:00:00", "countdown");
+            }
+        }
+        function countdown(targetDate, elementId) {
+            const target = new Date(targetDate).getTime();
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const difference = target - now;
+                if (difference <= 0) {
+                    document.getElementById(elementId).innerHTML = "Game Jam Started!";
+                    clearInterval(interval);
+                    return;
+                }
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                document.getElementById(elementId).innerHTML = `Next Game Jam in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }, 1000);
+        }
+        function toggleTheme() {
+            document.body.classList.toggle("light-mode");
+        }
+        function vote(jam) {
+            document.getElementById("voteResult").innerHTML = `You voted for: ${jam}!`;
+        }
+    </script>
+</body>
+</html>
