@@ -4,7 +4,12 @@ import time
 
 # Initialize WebDriver
 driver = webdriver.Chrome()
+<<<<<<< Updated upstream
 driver.get(r"D:\FrontEnd Dev\DevOps_SMAD\Devops\main.html")  # Adjust path as needed
+=======
+driver.get(r"C:\Users\Sainjal Kalnekar\OneDrive\Desktop\3\DevOps_SMAD\Devops\main.html")  # Corrected for Windows
+
+>>>>>>> Stashed changes
 
 def safe_print(msg):
     """Prints message safely, avoiding Unicode errors."""
